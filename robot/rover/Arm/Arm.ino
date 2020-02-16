@@ -616,6 +616,9 @@ void initSpeedParams(void) {
   motor5.setMotorSpeed(100);
   motor6.setMotorSpeed(100);
 
+  motor2.switchDirectionLogic();
+  motor4.switchDirectionLogic();
+
   // set pid slowest speed before it cuts power, to avoid noise and energy drain
   motor1.pidController.setSlowestSpeed(5.0); // needs to be tuned
   motor2.pidController.setSlowestSpeed(10.0); // needs to be tuned

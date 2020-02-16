@@ -62,7 +62,7 @@
 #define M1_LIMIT_SW_CW        22 // LS 2
 #define M1_LIMIT_SW_CCW       23 // LS 1
 #define M1_ENCODER_RESOLUTION 12
-#define M1_GEAR_RATIO         316.101*36 // no pulley
+#define M1_GEAR_RATIO         455.185*36 // no pulley
 #define M1_MIN_HARD_ANGLE     -275.0
 #define M1_MAX_HARD_ANGLE     275.0
 #define M1_MIN_SOFT_ANGLE     -270.0
@@ -100,9 +100,9 @@
 #define M3_LIMIT_SW_EXTEND_SHIFT  CORE_PIN19_BIT
 #define M3_LIMIT_SW_FLEX          18 // LS 6
 #define M3_LIMIT_SW_EXTEND        19 // LS 5
-#define M3_ENCODER_RESOLUTION 12
+#define M3_ENCODER_RESOLUTION 48
 //! belt reduction chained to worm gear drive
-#define M3_GEAR_RATIO         455.185*(23.0/15.0)*18.0
+#define M3_GEAR_RATIO         188.611*(23.0/15.0)*18.0
 #define M3_MIN_HARD_ANGLE     -145.0
 #define M3_MAX_HARD_ANGLE     65.0
 #define M3_MIN_SOFT_ANGLE     -140.0
