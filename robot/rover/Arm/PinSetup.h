@@ -83,10 +83,10 @@
 #define M2_ENCODER_RESOLUTION 48
 //! planetary gear motor chained to worm gear drive
 #define M2_GEAR_RATIO         99.508*(22.0/15.0)*48.0
-#define M2_MIN_HARD_ANGLE     -65.0 //!< the flexion angle at which the joint presses the limit switch
-#define M2_MAX_HARD_ANGLE     23.0 //!< the extension angle at which the joint presses the limit switch
-#define M2_MIN_SOFT_ANGLE     -62.0 //!< a safety margin is added to the flexion angle to avoid ever hitting the limit switch after homing is complete
-#define M2_MAX_SOFT_ANGLE     20.0 //!< a safety margin is added to the extension angle to avoid ever hitting the limit switch after homing is complete
+#define M2_MIN_HARD_ANGLE     -90.0 //!< the flexion angle at which the joint presses the limit switch
+#define M2_MAX_HARD_ANGLE     45.0 //!< the extension angle at which the joint presses the limit switch
+#define M2_MIN_SOFT_ANGLE     -88.0 //!< a safety margin is added to the flexion angle to avoid ever hitting the limit switch after homing is complete
+#define M2_MAX_SOFT_ANGLE     43.0 //!< a safety margin is added to the extension angle to avoid ever hitting the limit switch after homing is complete
 
 #define M3_DIR_PIN         7
 #define M3_PWM_PIN         6

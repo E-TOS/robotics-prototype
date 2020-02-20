@@ -552,10 +552,10 @@ void initEncoders(void) {
   motor4.pidController.setGainConstants(10.0, 0.0, 0.0);
 
   // set motor shaft angle tolerances
-  motor1.pidController.setJointAngleTolerance(0.1);//2.0 * motor1.gearRatioReciprocal); // randomly chosen for dc
-  motor2.pidController.setJointAngleTolerance(0.1);//2.0 * motor2.gearRatioReciprocal);
-  motor3.pidController.setJointAngleTolerance(0.1);//2.0 * motor3.gearRatioReciprocal);
-  motor4.pidController.setJointAngleTolerance(0.1);//2.0 * motor4.gearRatioReciprocal);
+  motor1.pidController.setJointAngleTolerance(3);//2.0 * motor1.gearRatioReciprocal); // randomly chosen for dc
+  motor2.pidController.setJointAngleTolerance(3);//2.0 * motor2.gearRatioReciprocal);
+  motor3.pidController.setJointAngleTolerance(3);//2.0 * motor3.gearRatioReciprocal);
+  motor4.pidController.setJointAngleTolerance(3);//2.0 * motor4.gearRatioReciprocal);
   motor5.pidController.setJointAngleTolerance(0.1);//2.0 * motor5.gearRatioReciprocal); // randomly chosen for servo
   motor6.pidController.setJointAngleTolerance(0.1);//2.0 * motor6.gearRatioReciprocal);
 }
@@ -588,7 +588,7 @@ void initLimitSwitches(void) {
   attachInterrupt(motor6.limSwitchExtend, m6ExtendISR, LIM_SWITCH_DIR);
 
   // set motor joint angle limits
-  motor1.setAngleLimits(M1_MIN_HARD_ANGLE, M1_MAX_HARD_ANGLE, M1_MIN_SOFT_ANGLE, M1_MAX_SOFT_ANGLE);
+  // motor1.setAngleLimits(M1_MIN_HARD_ANGLE, M1_MAX_HARD_ANGLE, M1_MIN_SOFT_ANGLE, M1_MAX_SOFT_ANGLE);
   motor2.setAngleLimits(M2_MIN_HARD_ANGLE, M2_MAX_HARD_ANGLE, M2_MIN_SOFT_ANGLE, M2_MAX_SOFT_ANGLE);
   motor3.setAngleLimits(M3_MIN_HARD_ANGLE, M3_MAX_HARD_ANGLE, M3_MIN_SOFT_ANGLE, M3_MAX_SOFT_ANGLE);
   motor4.setAngleLimits(M4_MIN_HARD_ANGLE, M4_MAX_HARD_ANGLE, M4_MIN_SOFT_ANGLE, M4_MAX_SOFT_ANGLE);
@@ -611,13 +611,14 @@ void initSpeedParams(void) {
 
   motor1.setMotorSpeed(80); // 60 rpm
   motor2.setMotorSpeed(42); // 32 rpm
-  motor3.setMotorSpeed(65); // 45 rpm
-  motor4.setMotorSpeed(30); // 60 rpm
+  motor3.setMotorSpeed(30); // 45 rpm
+  motor4.setMotorSpeed(60); // 60 rpm
   motor5.setMotorSpeed(100);
   motor6.setMotorSpeed(100);
 
   motor2.switchDirectionLogic();
   motor4.switchDirectionLogic();
+  motor5.switchDirectionLogic();
 
   // set pid slowest speed before it cuts power, to avoid noise and energy drain
   motor1.pidController.setSlowestSpeed(5.0); // needs to be tuned
@@ -636,8 +637,8 @@ void initSpeedParams(void) {
   motor2.setOpenLoopGain(0.0012); // needs to be tuned
   motor3.setOpenLoopGain(0.004); // more or less tuned
   motor4.setOpenLoopGain(0.04); // needs to be tuned
-  motor5.setOpenLoopGain(0.32);
-  motor6.setOpenLoopGain(0.25);
+  motor5.setOpenLoopGain(0.5);
+  motor6.setOpenLoopGain(0.5);
 }
 //! Attaches interrupt functions to motor timers. Also sets interrupt priorities.
 void initMotorTimers(void) {
