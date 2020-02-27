@@ -162,25 +162,25 @@ def handle_client(req):
     global ser # specify that it's global so it can be used properly
     global reqFeedback
     global reqInWaiting
-    scienceResponse = ScienceRequestResponse()
+    scienceResponse = McuRequestResponse()
     timeout = 0.1 # 100ms timeout
     reqInWaiting=True
     sinceRequest = time.time()
-    rospy.loginfo('received ' + req.msg + ' request from GUI, sending to " + mcuName + " MCU')
-    ser.write(str.encode(req.msg + '\n')) # ping the teensy
-    while scienceResponse.success is False and (time.time()-sinceRequest < timeout):
+    rospy.loginfo('received ' + req.science_msg + ' request from GUI, sending to " + mcuName + " MCU')
+    ser.write(str.encode(req.science_msg + '\n')) # ping the teensy
+    while scienceResponse.science_success is False and (time.time()-sinceRequest < timeout):
         if reqFeedback is not '':
             print('reqFeedback', reqFeedback)
             for request in requests:
                 for response in requests[request]:
-                    if request == req.msg and response in reqFeedback:
-                        scienceResponse.response = reqFeedback
-                        scienceResponse.success = True # a valid request and a valid response from the
+                    if request == req.science_msg and response in reqFeedback:
+                        scienceResponse.science_response = reqFeedback
+                        scienceResponse.science_success = True # a valid request and a valid response from the
                         break
-            if scienceResponse.success:
+            if scienceResponse.science_success:
                 break
             else:
-                scienceResponse.response += reqFeedback
+                scienceResponse.science_response += reqFeedback
         rospy.Rate(100).sleep() # test with 50? / 50ms timeout above
     rospy.loginfo('took ' + str(time.time()-sinceRequest) + ' seconds, sending this back to GUI: ')
     rospy.loginfo(scienceResponse)
@@ -238,7 +238,7 @@ if __name__ == '__main__':
 
     service_name = '/science_request'
     rospy.loginfo('Waiting for "'+service_name+'" service request from client')
-    serv = rospy.Service(service_name, ScienceRequest, handle_client)
+    serv = rospy.Service(service_name, McuRequest, handle_client)
 
     # service requests are implicitly handled but only at the rate the node publishes at
     global ser

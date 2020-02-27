@@ -143,25 +143,25 @@ def handle_client(req):
     global ser # specify that it's global so it can be used properly
     global reqFeedback
     global reqInWaiting
-    roverResponse = ArmRequestResponse()
+    roverResponse = McuRequestResponse()
     timeout = 0.2 # 200ms timeout
     reqInWaiting=True
     sinceRequest = time.time()
-    rospy.loginfo('received '+req.msg+' request from GUI, sending to rover Teensy')
-    ser.write(str.encode(req.msg+'\n')) # ping the teensy
-    while roverResponse.success is False and (time.time()-sinceRequest < timeout):
+    rospy.loginfo('received '+req.arm_msg+' request from GUI, sending to rover Teensy')
+    ser.write(str.encode(req.arm_msg+'\n')) # ping the teensy
+    while roverResponse.arm_success is False and (time.time()-sinceRequest < timeout):
         if reqFeedback is not '':
             rospy.loginfo(reqFeedback)
             for request in requests:
                 for response in requests[request]:
-                    if request == req.msg and response in reqFeedback:
-                        roverResponse.response = reqFeedback
-                        roverResponse.success = True #a valid request and a valid response from the mcu
+                    if request == req.arm_msg and response in reqFeedback:
+                        roverResponse.arm_response = reqFeedback
+                        roverResponse.arm_success = True #a valid request and a valid response from the mcu
                         break
-            if roverResponse.success:
+            if roverResponse.arm_success:
                 break
             else:
-                roverResponse.response += reqFeedback
+                roverResponse.arm_response += reqFeedback
         rospy.Rate(100).sleep()
     rospy.loginfo('took '+str(time.time()-sinceRequest)+' seconds, sending this back to GUI: ')
     rospy.loginfo(roverResponse)
@@ -283,8 +283,7 @@ if __name__ == '__main__':
 
     service_name = '/rover_request'
     rospy.loginfo('Waiting for "'+service_name+'" service request from client')
-    #TODO: change to RoverRequest? or just McuRequest? meaning change arm and mcu_control etc?
-    serv = rospy.Service(service_name, ArmRequest, handle_client)
+    serv = rospy.Service(service_name, McuRequest, handle_client)
 
     # service requests are implicitly handled but only at the rate the node publishes at
     global ser

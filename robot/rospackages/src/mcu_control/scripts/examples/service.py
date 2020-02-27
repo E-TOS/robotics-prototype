@@ -6,7 +6,7 @@ from mcu_control.srv import *
 def handle_client(req):
     rospy.loginfo("received "+req.msg)
     data_str = ""
-    msg = ArmRequestResponse(
+    msg = McuRequestResponse(
         "pong\n",
         True
     )

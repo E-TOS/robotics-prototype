@@ -131,25 +131,25 @@ def handle_client(req):
     global ser # specify that it's global so it can be used properly
     global reqFeedback
     global reqInWaiting
-    armResponse = ArmRequestResponse()
+    armResponse = McuRequestResponse()
     timeout = 0.1 # 100ms timeout
     reqInWaiting=True
     sinceRequest = time.time()
-    rospy.loginfo('received '+req.msg+' request from GUI, sending to arm Teensy')
-    ser.write(str.encode(req.msg+'\n')) # ping the teensy
-    while armResponse.success is False and (time.time()-sinceRequest < timeout):
+    rospy.loginfo('received '+req.arm_msg+' request from GUI, sending to arm Teensy')
+    ser.write(str.encode(req.arm_msg+'\n')) # ping the teensy
+    while armResponse.arm_success is False and (time.time()-sinceRequest < timeout):
         if reqFeedback is not '':
             print(reqFeedback)
             for request in requests:
                 for response in requests[request]:
-                    if request == req.msg and response in reqFeedback:
-                        armResponse.response = reqFeedback
-                        armResponse.success = True #a valid request and a valid response from the
+                    if request == req.arm_msg and response in reqFeedback:
+                        armResponse.arm_response = reqFeedback
+                        armResponse.arm_success = True #a valid request and a valid response from the
                         break
-            if armResponse.success:
+            if armResponse.arm_success:
                 break
             else:
-                armResponse.response += reqFeedback
+                armResponse.arm_success += reqFeedback
         rospy.Rate(100).sleep()
     rospy.loginfo('took '+str(time.time()-sinceRequest)+' seconds, sending this back to GUI: ')
     rospy.loginfo(armResponse)

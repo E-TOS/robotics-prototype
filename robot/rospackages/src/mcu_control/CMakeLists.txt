@@ -21,8 +21,7 @@ find_package(catkin REQUIRED COMPONENTS
 add_service_files(
   FILES
   ## arm
-  ArmRequest.srv
-  ScienceRequest.srv
+  McuRequest.srv
 )
 
 add_message_files(

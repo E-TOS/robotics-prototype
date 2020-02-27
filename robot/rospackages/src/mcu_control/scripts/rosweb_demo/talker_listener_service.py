@@ -8,7 +8,7 @@ from mcu_control.srv import *
 # todo: maybe publish/parse the string if it's not ping? this might cause errors but it's worth a shot
 def handle_client(req):
     rospy.loginfo("received request from client")
-    response = ArmRequestResponse(
+    response = McuRequestResponse(
         "you sent "+req.msg+'\n',
         True
     )

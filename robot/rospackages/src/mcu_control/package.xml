@@ -10,7 +10,7 @@
     This node listens to the serial port and based on the data it will know where to send it.
     It subscribes to the arm_command topic and to arm_request client requests and
     then either sends back feedback through the arm_feedback topic, the arm_joint_states topic,
-    or ArmRequest.srv.
+    or McuRequest.srv.
 
     RoverNode.py will open a UART or USB serial port based on the input arguments.
     It cannot yet be opened directly through the task_handler.

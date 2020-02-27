@@ -6,7 +6,7 @@ $(document).ready(function () {
   science_request_client = new ROSLIB.Service({
     ros: ros,
     name: 'science_request',
-    serviceType: 'ScienceRequest'
+    serviceType: McuRequest'
   })
 
   // setup a subscriber for the arm_joint_states topic
