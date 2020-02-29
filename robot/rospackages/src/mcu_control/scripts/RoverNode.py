@@ -201,43 +201,32 @@ def publish_joint_states(message):
     return
 
 def publish_nav_states(message):
-    heading,gps = message.split(' -- ')
-    # parse heading, give -999 if invalid heading
-    if 'OK' in heading:
-        try:
+    try:
+        heading, gps = message.split(' -- ')
+        if 'OK' in heading:
             left,heading = heading.split(' ')
             roverHeading = float(heading)
-        except:
-            roverHeading = -999
-            rospy.logwarn('bad string, got: ' + heading)
-    else:
-        if 'N/A' in heading:
+        elif 'N/A' in heading:
             rospy.logwarn('IMU heading data unavailable')
         else:
-            rospy.logwarn('bad string, got: ' + heading)
-        roverHeading = -999
-    # parse gps, give -999 for lat and long if invalid coords
-    if 'OK' in gps:
-        try:
+            rospy.logwarn('bad heading, got: ' + heading)
+
+        if 'OK' in gps:
             left,tempLat,tempLong = gps.split(' ')
             roverLatitude = float(tempLat)
             roverLongitude = float(tempLong)
-        except:
-            roverLatitude = roverLongitude = -999
-            rospy.logwarn('bad string, got: ' + gps)
-    else:
-        if 'N/A' in gps:
+        elif 'N/A' in gps:
             rospy.logwarn('GPS data unavailable')
-        else:
-            rospy.logwarn('bad string, got: ' + gps)
-        roverLatitude = roverLongitude = -999
+            else:
+            rospy.logwarn('bad gps, got: ' + gps)
 
-    msg = Point();
-    msg.x = roverLatitude
-    msg.y = roverLongitude
-    msg.z = roverHeading
-    navPub.publish(msg)
-    return
+        msg = Point();
+        msg.x = roverLatitude
+        msg.y = roverLongitude
+        msg.z = roverHeading
+        navPub.publish(msg)
+    except Exception e:
+        rospy.logerr(e)
 
 def stripFeedback(data):
     startStrip='ASTRO '

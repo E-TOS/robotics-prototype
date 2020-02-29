@@ -70,13 +70,16 @@ def init_serial():
                     ser.write(str.encode('who\n'))
                     while (time.time()-startListening < timeout):
                         if ser.in_waiting: # if there is data in the serial buffer
-                            response = ser.readline().decode()
-                            rospy.loginfo('response: '+response)
-                            if mcuName in response:
-                                rospy.loginfo(mcuName+" MCU identified!")
-                                rospy.loginfo('timeout: %f ms', (time.time()-startListening)*1000)
-                                rospy.loginfo('took %f ms to find the '+mcuName+' MCU', (time.time()-startConnecting)*1000)
-                                return
+                            try:
+                                response = ser.readline().decode()
+                                rospy.loginfo('response: '+response)
+                                if mcuName in response:
+                                    rospy.loginfo(mcuName+" MCU identified!")
+                                    rospy.loginfo('timeout: %f ms', (time.time()-startListening)*1000)
+                                    rospy.loginfo('took %f ms to find the '+mcuName+' MCU', (time.time()-startConnecting)*1000)
+                                    return
+                            except Exception e:
+                                rospy.logerr(e)
         else:
             rospy.logerr("No USB devices recognized, exiting")
             sys.exit(0)
@@ -174,8 +177,8 @@ def publish_joint_states(message):
     try:
         for angle in angles:
             msg.position.append(float(angle))
-    except:
-        rospy.logwarn('trouble parsing motor angles')
+    except Exception e:
+        rospy.logerr(e)
         return
     # publish it
     anglePub.publish(msg)
@@ -237,8 +240,8 @@ if __name__ == '__main__':
                 try:
                     data = ser.readline().decode()
                     feedback = stripFeedback(data)
-                except:
-                    rospy.logwarn('trouble reading from serial port')
+                except Exception e:
+                    rospy.logerr(e)
                 if feedback is not None:
                     if 'Motor Angles' in feedback:
                         #rospy.loginfo(feedback)
