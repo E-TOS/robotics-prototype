@@ -166,18 +166,18 @@ def handle_client(req):
     timeout = 0.1 # 100ms timeout
     reqInWaiting=True
     sinceRequest = time.time()
-    rospy.loginfo('received ' + req.science_msg + ' request from GUI, sending to " + mcuName + " MCU')
-    ser.write(str.encode(req.science_msg + '\n')) # ping the teensy
-    while scienceResponse.science_success is False and (time.time()-sinceRequest < timeout):
+    rospy.loginfo('received ' + req.msg + ' request from GUI, sending to " + mcuName + " MCU')
+    ser.write(str.encode(req.msg + '\n')) # ping the teensy
+    while scienceResponse.success is False and (time.time()-sinceRequest < timeout):
         if reqFeedback is not '':
             print('reqFeedback', reqFeedback)
             for request in requests:
                 for response in requests[request]:
-                    if request == req.science_msg and response in reqFeedback:
-                        scienceResponse.science_response = reqFeedback
-                        scienceResponse.science_success = True # a valid request and a valid response from the
+                    if request == req.msg and response in reqFeedback:
+                        scienceResponse.response = reqFeedback
+                        scienceResponse.success = True # a valid request and a valid response from the
                         break
-            if scienceResponse.science_success:
+            if scienceResponse.success:
                 break
             else:
                 scienceResponse.science_response += reqFeedback

@@ -147,21 +147,21 @@ def handle_client(req):
     timeout = 0.2 # 200ms timeout
     reqInWaiting=True
     sinceRequest = time.time()
-    rospy.loginfo('received '+req.arm_msg+' request from GUI, sending to rover Teensy')
-    ser.write(str.encode(req.arm_msg+'\n')) # ping the teensy
-    while roverResponse.arm_success is False and (time.time()-sinceRequest < timeout):
+    rospy.loginfo('received '+req.msg+' request from GUI, sending to rover Teensy')
+    ser.write(str.encode(req.msg+'\n')) # ping the teensy
+    while roverResponse.success is False and (time.time()-sinceRequest < timeout):
         if reqFeedback is not '':
             rospy.loginfo(reqFeedback)
             for request in requests:
                 for response in requests[request]:
-                    if request == req.arm_msg and response in reqFeedback:
-                        roverResponse.arm_response = reqFeedback
-                        roverResponse.arm_success = True #a valid request and a valid response from the mcu
+                    if request == req.msg and response in reqFeedback:
+                        roverResponse.response = reqFeedback
+                        roverResponse.success = True #a valid request and a valid response from the mcu
                         break
-            if roverResponse.arm_success:
+            if roverResponse.success:
                 break
             else:
-                roverResponse.arm_response += reqFeedback
+                roverResponse.response += reqFeedback
         rospy.Rate(100).sleep()
     rospy.loginfo('took '+str(time.time()-sinceRequest)+' seconds, sending this back to GUI: ')
     rospy.loginfo(roverResponse)
