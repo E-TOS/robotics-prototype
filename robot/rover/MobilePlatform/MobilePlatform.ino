@@ -463,18 +463,30 @@ void rm_encoder_interrupt(void) {
     RM.dt += micros() - RM.prevTime;
     RM.prevTime = micros();
     RM.encoderCount++;
+    RM.encoderState << 2;
+    if (digitalReadFast(RM.encoderPinA) == HIGH) RM.encoderState | A_H;
+    if (digitalReadFast(RM.encoderPinB) == HIGH) RM.encoderState | B_H;
+
 }
 
 void rb_encoder_interrupt(void) {
     RB.dt += micros() - RB.prevTime;
     RB.prevTime = micros();
     RB.encoderCount++;
+    RB.encoderState << 2;
+    if (digitalReadFast(RB.encoderPinA) == HIGH) RB.encoderState | A_H;
+    if (digitalReadFast(RB.encoderPinB) == HIGH) RB.encoderState | B_H;
+
 }
 
 void lf_encoder_interrupt(void) {
     LF.dt += micros() - LF.prevTime;
     LF.prevTime = micros();
     LF.encoderCount++;
+    LF.encoderState << 2;
+    if (digitalReadFast(LF.encoderPinA) == HIGH) LF.encoderState | A_H;
+    if (digitalReadFast(LF.encoderPinB) == HIGH) LF.encoderState | B_H;
+
 //    Serial.println(LF.dt);
 //    Serial.println(LF.encoderCount);
 }
@@ -483,10 +495,18 @@ void lm_encoder_interrupt(void) {
     LM.dt += micros() - LM.prevTime;
     LM.prevTime = micros();
     LM.encoderCount++;
+    LM.encoderState << 2;
+    if (digitalReadFast(LM.encoderPinA) == HIGH) LM.encoderState | A_H;
+    if (digitalReadFast(LM.encoderPinB) == HIGH) LM.encoderState | B_H;
+
 }
 
 void lb_encoder_interrupt(void) {
     LB.dt += micros() - LB.prevTime;
     LB.prevTime = micros();
     LB.encoderCount++;
+    LB.encoderState << 2;
+    if (digitalReadFast(LB.encoderPinA) == HIGH) LB.encoderState | A_H;
+    if (digitalReadFast(LB.encoderPinB) == HIGH) LB.encoderState | B_H;
+
 }
