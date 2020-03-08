@@ -62,9 +62,13 @@ float wheelBase = 0.33; //distance between left and right wheels
 float radius = 0.14; // in m
 float piRad = 0.10472; // Pi in radians
 //float kp = 23.5;
-float kp = 14.1;
-float ki = 0.282;
-float kd = 40.625;
+//float kp = 14.1;
+//float ki = 0.282;
+//float kd = 40.625;
+//last try
+float kp = 1.0;
+float ki = 0.0082;
+float kd = 10.625;
 //float kp = 10.0;
 //float ki = 0.02;
 //float kd = 0.05;
@@ -443,17 +447,19 @@ void initPids(void) {
 }
 
 
-const unsigned char A_H = 0b10; //Zero
-const unsigned char B_H = 0b01; //Any nonzero value
+const unsigned char encA_H = 0b10; //Zero
+const unsigned char encB_H = 0b01; //Any nonzero value
 
 
 void rf_encoder_interrupt(void) {
     RF.dt += micros() - RF.prevTime;
     RF.prevTime = micros();
     RF.encoderCount++;
-    RF.encoderState << 2;
-    if (digitalReadFast(RF.encoderPinA) == HIGH) RF.encoderState | A_H;
-    if (digitalReadFast(RF.encoderPinB) == HIGH) RF.encoderState | B_H;
+    RF.encoderState <<= 2;
+    RF.encoderState &= 0b1111;
+
+    if (digitalReadFast(RF.encoderPinA) == HIGH) RF.encoderState |= encA_H;
+    if (digitalReadFast(RF.encoderPinB) == HIGH) RF.encoderState |= encB_H;
 
     //    motorList[0].setVelocity(1 , 0, motorList[0].getCurrentVelocity());
 
@@ -463,9 +469,10 @@ void rm_encoder_interrupt(void) {
     RM.dt += micros() - RM.prevTime;
     RM.prevTime = micros();
     RM.encoderCount++;
-    RM.encoderState << 2;
-    if (digitalReadFast(RM.encoderPinA) == HIGH) RM.encoderState | A_H;
-    if (digitalReadFast(RM.encoderPinB) == HIGH) RM.encoderState | B_H;
+    RM.encoderState <<= 2;
+    RM.encoderState &= 0b1111;
+    if (digitalReadFast(RM.encoderPinA) == HIGH) RM.encoderState |= encA_H;
+    if (digitalReadFast(RM.encoderPinB) == HIGH) RM.encoderState |= encB_H;
 
 }
 
@@ -473,9 +480,11 @@ void rb_encoder_interrupt(void) {
     RB.dt += micros() - RB.prevTime;
     RB.prevTime = micros();
     RB.encoderCount++;
-    RB.encoderState << 2;
-    if (digitalReadFast(RB.encoderPinA) == HIGH) RB.encoderState | A_H;
-    if (digitalReadFast(RB.encoderPinB) == HIGH) RB.encoderState | B_H;
+    RB.encoderState <<= 2;
+    RB.encoderState &= 0b1111;
+
+    if (digitalReadFast(RB.encoderPinA) == HIGH) RB.encoderState |= encA_H;
+    if (digitalReadFast(RB.encoderPinB) == HIGH) RB.encoderState |= encB_H;
 
 }
 
@@ -483,9 +492,11 @@ void lf_encoder_interrupt(void) {
     LF.dt += micros() - LF.prevTime;
     LF.prevTime = micros();
     LF.encoderCount++;
-    LF.encoderState << 2;
-    if (digitalReadFast(LF.encoderPinA) == HIGH) LF.encoderState | A_H;
-    if (digitalReadFast(LF.encoderPinB) == HIGH) LF.encoderState | B_H;
+    LF.encoderState <<= 2;
+    LF.encoderState &= 0b1111;
+
+    if (digitalReadFast(LF.encoderPinA) == HIGH) LF.encoderState |= encA_H;
+    if (digitalReadFast(LF.encoderPinB) == HIGH) LF.encoderState |= encB_H;
 
 //    Serial.println(LF.dt);
 //    Serial.println(LF.encoderCount);
@@ -495,9 +506,11 @@ void lm_encoder_interrupt(void) {
     LM.dt += micros() - LM.prevTime;
     LM.prevTime = micros();
     LM.encoderCount++;
-    LM.encoderState << 2;
-    if (digitalReadFast(LM.encoderPinA) == HIGH) LM.encoderState | A_H;
-    if (digitalReadFast(LM.encoderPinB) == HIGH) LM.encoderState | B_H;
+    LM.encoderState <<= 2;
+    LM.encoderState &= 0b1111;
+
+    if (digitalReadFast(LM.encoderPinA) == HIGH) LM.encoderState |= encA_H;
+    if (digitalReadFast(LM.encoderPinB) == HIGH) LM.encoderState |= encB_H;
 
 }
 
@@ -505,8 +518,10 @@ void lb_encoder_interrupt(void) {
     LB.dt += micros() - LB.prevTime;
     LB.prevTime = micros();
     LB.encoderCount++;
-    LB.encoderState << 2;
-    if (digitalReadFast(LB.encoderPinA) == HIGH) LB.encoderState | A_H;
-    if (digitalReadFast(LB.encoderPinB) == HIGH) LB.encoderState | B_H;
+    LB.encoderState <<= 2;
+    LB.encoderState &= 0b1111;
+
+    if (digitalReadFast(LB.encoderPinA) == HIGH) LB.encoderState |= encA_H;
+    if (digitalReadFast(LB.encoderPinB) == HIGH) LB.encoderState |= encB_H;
 
 }

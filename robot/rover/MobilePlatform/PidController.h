@@ -38,18 +38,8 @@ PidController::PidController() {
 float PidController::updatePID(volatile float currentVelocity, float desiredVelocity) {
     error = desiredVelocity - currentVelocity; // these angle variables need to be obtained from the motor object
 
-//    error = fabs(error);
-//    Serial.print("error ");
-//    Serial.print(error);
-//    Serial.print(" dt ");
-//    Serial.print(dt);
-//    Serial.print(" kp ");
-//    Serial.print(kp);
-//    Serial.print(" ki ");
-//    Serial.print(ki);
-//    Serial.print(" pidsum ");
     pTerm = kp * error;
-//    iTerm += ki * error ;
+//    iTerm += ki * error;
     iTerm += ki * ((error + previousError) / 2) * dt;
 
     if (iTerm > 255) iTerm = 255;
@@ -58,13 +48,11 @@ float PidController::updatePID(volatile float currentVelocity, float desiredVelo
 //    dTerm = kd * (error - previousError) ;
     pidSum = pTerm + iTerm + dTerm;
 //    Serial.print(pidSum);
-
 //    Serial.print(" ");
-
 //    pidSum = constrain(pidSum, 0, 255);
 
     if (pidSum > 255) pidSum = 255;
-  if (pidSum < 15) pidSum = 0;
+    if (pidSum < 15) pidSum = 0;
 //    Serial.println(pidSum);
     previousError = error;
     dt = 0;

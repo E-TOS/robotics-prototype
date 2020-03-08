@@ -93,9 +93,9 @@ public:
 
     const int encoderStates[16] = {0, 1, -1, 0, -1, 0,  0, 1, 1, 0,  0, -1, 0, -1, 1, 0 };
                                 // 0  1   2  3   4  5   6  7  8  9  10  11  12  13  14  15
-    const unsigned char A_H = 0b10; //Zero is low
-    const unsigned char B_H = 0b01; //1 is high
-    unsigned int encoderState : 4 = 0x00; // 4-bits Encoder states table  [Prev-A Prev-B Current-A Current-B], 0 or L is Low, and 1 or H is High
+    const unsigned char encA_H = 0b10; //Zero is low
+    const unsigned char encB_H = 0b01; //1 is high
+    unsigned char encoderState = 0; // 4-bits Encoder states table  [Prev-A Prev-B Current-A Current-B], 0 or L is Low, and 1 or H is High
 
 protected:
     // the following variables are specific to encoders
