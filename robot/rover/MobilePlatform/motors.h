@@ -85,20 +85,30 @@ public:
     float desiredVelocity;
     int desiredDirection;
 
+                                //     2        11      13      4
+//    unsigned int cwStates : 4 [4] = {0b0010, 0b1011, 0b1101, 0b0100};
+//
+//                                //      1       7       14      8
+//    unsigned int ccwStates : 4 [4] = {0b0001, 0b0111, 0b1110, 0b1000};
+
+    const int encoderStates[16] = {0, 1, -1, 0, -1, 0,  0, 1, 1, 0,  0, -1, 0, -1, 1, 0 };
+                                // 0  1   2  3   4  5   6  7  8  9  10  11  12  13  14  15
+    const unsigned char A_H = 0b10; //Zero is low
+    const unsigned char B_H = 0b01; //1 is high
+    unsigned int encoderState : 4 = 0x00; // 4-bits Encoder states table  [Prev-A Prev-B Current-A Current-B], 0 or L is Low, and 1 or H is High
+
 protected:
     // the following variables are specific to encoders
     int encoderResolution; // ticks per revolution
     volatile float currentVelocity; // can be updated within timer interrupts
-//    float desiredVelocity;
-//    int directionModifier;
-//    float setDesiredVelocity(float desiredVelocity);
+    volatile float currentDirection; // can be updated within timer interrupts
+
 
 };
 
 DcMotor::DcMotor(int dirPin, int pwmPin, float gearRatio, String motorName):// if no encoder
         directionPin(dirPin), pwmPin(pwmPin)
 {
-    // variables declared in RobotMotor require the this-> operator
     this -> gearRatio = gearRatio;
     this -> gearRatioReciprocal = 1 / gearRatio; // preemptively reduce floating point calculation time
     this -> motorName = motorName;
@@ -106,21 +116,17 @@ DcMotor::DcMotor(int dirPin, int pwmPin, float gearRatio, String motorName):// i
 
 
 void DcMotor::calcCurrentVelocity() {
-//    Serial.print(dt);
-//    Serial.print(" ");
-//    Serial.print(encoderCount);
-//    Serial.println(" ");
 
+    currentDirection = encoderStates[encoderState];
     if (dt <= 0 || encoderCount <= 0) {
         currentVelocity = 0;
     }
     else {
-        currentVelocity = (float) (encoderCount * 60000000.0 * gearRatioReciprocal * encoderResolutionReciprocal / (float) (dt));
+        currentVelocity = (float) currentDirection * (encoderCount * 60000000.0 * gearRatioReciprocal * encoderResolutionReciprocal / (float) (dt));
     }
 
     encoderCount = 0;
     dt = 0;
-    //  Serial.println(dt/1000);
 }
 
 float DcMotor::getCurrentVelocity(void) {
