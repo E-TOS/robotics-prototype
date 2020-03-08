@@ -62,7 +62,7 @@
 #define M1_LIMIT_SW_CW        22 // LS 2
 #define M1_LIMIT_SW_CCW       23 // LS 1
 #define M1_ENCODER_RESOLUTION 12
-#define M1_GEAR_RATIO         316.101*36 // no pulley
+#define M1_GEAR_RATIO         455.185*36 // no pulley
 #define M1_MIN_HARD_ANGLE     -275.0
 #define M1_MAX_HARD_ANGLE     275.0
 #define M1_MIN_SOFT_ANGLE     -270.0
@@ -83,10 +83,10 @@
 #define M2_ENCODER_RESOLUTION 48
 //! planetary gear motor chained to worm gear drive
 #define M2_GEAR_RATIO         99.508*(22.0/15.0)*48.0
-#define M2_MIN_HARD_ANGLE     -65.0 //!< the flexion angle at which the joint presses the limit switch
-#define M2_MAX_HARD_ANGLE     23.0 //!< the extension angle at which the joint presses the limit switch
-#define M2_MIN_SOFT_ANGLE     -62.0 //!< a safety margin is added to the flexion angle to avoid ever hitting the limit switch after homing is complete
-#define M2_MAX_SOFT_ANGLE     20.0 //!< a safety margin is added to the extension angle to avoid ever hitting the limit switch after homing is complete
+#define M2_MIN_HARD_ANGLE     -90.0 //!< the flexion angle at which the joint presses the limit switch
+#define M2_MAX_HARD_ANGLE     45.0 //!< the extension angle at which the joint presses the limit switch
+#define M2_MIN_SOFT_ANGLE     -88.0 //!< a safety margin is added to the flexion angle to avoid ever hitting the limit switch after homing is complete
+#define M2_MAX_SOFT_ANGLE     43.0 //!< a safety margin is added to the extension angle to avoid ever hitting the limit switch after homing is complete
 
 #define M3_DIR_PIN         7
 #define M3_PWM_PIN         6
@@ -100,9 +100,9 @@
 #define M3_LIMIT_SW_EXTEND_SHIFT  CORE_PIN19_BIT
 #define M3_LIMIT_SW_FLEX          18 // LS 6
 #define M3_LIMIT_SW_EXTEND        19 // LS 5
-#define M3_ENCODER_RESOLUTION 12
+#define M3_ENCODER_RESOLUTION 48
 //! belt reduction chained to worm gear drive
-#define M3_GEAR_RATIO         455.185*(23.0/15.0)*18.0
+#define M3_GEAR_RATIO         188.611*(23.0/15.0)*18.0
 #define M3_MIN_HARD_ANGLE     -145.0
 #define M3_MAX_HARD_ANGLE     65.0
 #define M3_MIN_SOFT_ANGLE     -140.0
