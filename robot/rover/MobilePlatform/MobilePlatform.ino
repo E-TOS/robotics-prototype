@@ -442,10 +442,19 @@ void initPids(void) {
     */
 }
 
+
+const unsigned char A_H = 0b10; //Zero
+const unsigned char B_H = 0b01; //Any nonzero value
+
+
 void rf_encoder_interrupt(void) {
     RF.dt += micros() - RF.prevTime;
     RF.prevTime = micros();
     RF.encoderCount++;
+    RF.encoderState << 2;
+    if (digitalReadFast(RF.encoderPinA) == HIGH) RF.encoderState | A_H;
+    if (digitalReadFast(RF.encoderPinB) == HIGH) RF.encoderState | B_H;
+
     //    motorList[0].setVelocity(1 , 0, motorList[0].getCurrentVelocity());
 
 }
