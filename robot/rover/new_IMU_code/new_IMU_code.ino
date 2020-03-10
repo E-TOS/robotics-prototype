@@ -3,7 +3,7 @@
 
 
 #define LED 13
-#define imu_serial Serial5
+#define imu_serial Serial2
 #define dev_serial Serial
 elapsedMillis timeElapsed;
 
