@@ -1,29 +1,48 @@
-
+#include <elapsedMillis.h>
+#include <SoftwareSerial.h>
 
 
 #define LED 13
-#define serial_port Serial
+#define imu_serial Serial5
+#define dev_serial Serial
+elapsedMillis timeElapsed;
 
-
-
-unsigned long t_now = 0;
-unsigned long t_last = 0;
+String imu_msg;
 long time_interval = 500;
-
+char cmd;
 void setup() {
   // put your setup code here, to run once:
   pinMode(LED,OUTPUT);
-  serial_port.begin(9600);
+  imu_serial.begin(115200);
+  // imu_serial.setTimeout(20);
+  dev_serial.begin(115200);
+  // dev_serial.setTimeout(20);
+  delay(300);
+  imu_serial.write(" ");
   }
 
 void loop() {
   // put your main code here, to run repeatedly:
-  t_now = millis();
-  if (t_now - t_last > time_interval)
+
+  if (timeElapsed > time_interval)
   {
     digitalWrite(LED, !digitalRead(LED));
-    t_last = t_now;
-
+    timeElapsed = 0;
   }
+
+  if (dev_serial.available() > 0)
+  {
+    cmd = dev_serial.read();
+    imu_serial.write(cmd);
+  }
+
+  if(imu_serial.available() > 0)
+  {
+    
+    imu_msg = imu_serial.readStringUntil('\n');
+    dev_serial.println(imu_msg);
+  }  
   
+
+
 }
