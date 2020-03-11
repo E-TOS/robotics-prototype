@@ -180,7 +180,7 @@ def handle_client(req):
             if scienceResponse.success:
                 break
             else:
-                scienceResponse.science_response += reqFeedback
+                scienceResponse.response += reqFeedback
         rospy.Rate(100).sleep() # test with 50? / 50ms timeout above
     rospy.loginfo('took ' + str(time.time()-sinceRequest) + ' seconds, sending this back to GUI: ')
     rospy.loginfo(scienceResponse)

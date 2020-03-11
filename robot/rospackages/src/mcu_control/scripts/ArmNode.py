@@ -149,7 +149,7 @@ def handle_client(req):
             if armResponse.success:
                 break
             else:
-                armResponse.success += reqFeedback
+                armResponse.response += reqFeedback
         rospy.Rate(100).sleep()
     rospy.loginfo('took '+str(time.time()-sinceRequest)+' seconds, sending this back to GUI: ')
     rospy.loginfo(armResponse)
