@@ -129,6 +129,8 @@ void setup()
   // For production testing only
   // To catch a "$" and enter testing mode
   // Serial1.begin(9600);
+
+  imu.dmpSetFifoRate(5);
 }
 
 void loop()
@@ -467,6 +469,8 @@ void parseSerialInput(char c)
   case SET_LOG_RATE: // Increment the log rate from 1-100Hz (10Hz increments)
     temp = imu.dmpGetFifoRate(); // Get current FIFO rate
     if (temp == 1) // If it's 1Hz, set it to 10Hz
+      temp = 5;
+    else if (temp == 5)
       temp = 10;
     else
       temp += 10; // Otherwise increment by 10

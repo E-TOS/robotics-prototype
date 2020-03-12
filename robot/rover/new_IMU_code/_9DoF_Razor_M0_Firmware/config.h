@@ -1,11 +1,11 @@
 ////////////////////////////////
 // Default Logging Parameters //
 ////////////////////////////////
-#define ENABLE_TIME_LOG       true
-#define ENABLE_CALCULATED_LOG true
-#define ENABLE_ACCEL_LOG      true
-#define ENABLE_GYRO_LOG       true
-#define ENABLE_MAG_LOG        true
+#define ENABLE_TIME_LOG       false
+#define ENABLE_CALCULATED_LOG false
+#define ENABLE_ACCEL_LOG      false
+#define ENABLE_GYRO_LOG       false
+#define ENABLE_MAG_LOG        false
 #define ENABLE_QUAT_LOG       false
 #define ENABLE_EULER_LOG      false
 #define ENABLE_HEADING_LOG    false
@@ -14,7 +14,7 @@
 // Enable Non-Volatile Memory Storage //
 ////////////////////////////////////////
 // If defined, FlashStorage library must be installed
-#define ENABLE_NVRAM_STORAGE
+// #define ENABLE_NVRAM_STORAGE
 
 ////////////////////////
 // Serial Port Config //
@@ -30,7 +30,7 @@
 // LED Config //
 ////////////////
 #define HW_LED_PIN 13        // LED attached to pin 13
-#define UART_BLINK_RATE 1000 // Blink rate when only UART logging
+#define UART_BLINK_RATE 500 // Blink rate when only UART logging
 
 /////////////////////////
 // IMU Default Configs //
