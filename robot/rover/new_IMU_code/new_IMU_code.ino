@@ -67,6 +67,7 @@ void loop() {
   {
     
     imu_msg = imu_serial.readStringUntil('\n');
+    imu_message_format();
     dev_serial.println(imu_msg);
   }  
 
@@ -78,4 +79,21 @@ void loop() {
 void imu_send_command(char cmd)
 {
   imu_serial.write(cmd);
+}
+
+void imu_message_format(void)
+{
+  char temp1[100];
+  imu_msg.toCharArray(temp1,100);
+  char* temp2 = strtok(temp1,",");
+  String pitch_str = "Pitch : " + String(temp2);
+  temp2 = strtok(0,",");
+  String roll_str = "Roll : " + String(temp2);
+  temp2 = strtok(0,",");
+  String yaw_str = "Yaw : " + String(temp2);
+  temp2 = strtok(0,",");
+  String head_str = "Heading : " + String(temp2);
+
+  imu_msg = pitch_str + "," + roll_str + "," + yaw_str + "," + head_str;
+
 }
